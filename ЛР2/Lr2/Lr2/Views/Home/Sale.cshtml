@@ -1,0 +1,33 @@
+﻿
+@model IEnumerable<Lr2.Models.Product>
+@{
+    ViewData["Title"] = "Список продаж";
+}
+<h3>Список продаваемых товаров</h3>
+<table class="table table-bordered">
+    <tr class="table-dark">
+        <td>Название</td>
+        <td>Описание</td>
+        <td>Количество</td>
+        <td>Цена</td>
+        <td></td>
+        <td></td>
+    </tr>
+    @foreach (var product in Model)
+    {
+        if (product.User == User.Identity.Name)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Quantity</td>
+                <td>@product.Price</td>
+                <td><a href="~/Home/Update/@product.Id">Изменить</a></td>
+                <td><a href="~/Home/Delete/@product.Id">Удалить</a></td>
+            </tr>
+        }
+    }
+</table>
+<form action="~/Home/Add">
+    <button>Добавить</button>
+</form>

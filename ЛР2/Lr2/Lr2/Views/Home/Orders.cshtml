@@ -1,0 +1,47 @@
+﻿
+@model IEnumerable<Lr2.Models.Product>
+@{
+    ViewData["Title"] = "Корзина";
+}
+<h3>Корзина</h3>
+<table id="table" class="table table-bordered">
+    <tr class="table-dark">
+        <td>Название</td>
+        <td>Описание</td>
+        <td>Количество</td>
+        <td></td>
+        <td>Цена</td>
+        <td></td>
+    </tr>
+    @foreach (var order in @ViewBag.Order)
+    {
+        if (order.UserId == User.Identity.Name)
+        {
+            @foreach (var product in Model)
+            {
+                if (order.ProductId == product.Id)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.Description</td>
+                        <td>@order.Quantity</td>
+                        <td><a href="~/Home/AddQuantity/@product.Id">+</a><a href="~/Home/RemoveQuantity/@product.Id">-</a></td>
+                        <td>@product.Price</td>
+                        <td><a href="~/Home/DeleteOrder/@product.Id">Убрать</a></td>
+                    </tr>
+                }
+            }
+        }
+    }
+    <tr class="table-secondary">
+        <td>Cумма</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+<form action="~/Home/DeleteOrders">
+    <button>Оплатить</button>
+</form>
